@@ -2,10 +2,49 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
+import { AuthApi, Configuration, UserApi, UserLoginRequest, UserSignupRequest } from '@jbwittner/bankwiz_openapi-client'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+
+  const confBack: Configuration = new Configuration({
+    baseOptions: {
+      withCredentials: true,
+    },
+  })
+
+
+  var userapi = new UserApi(confBack);
+  var authapi = new AuthApi(confBack);
+
+  const registration = () => {
+    const request: UserSignupRequest = {
+      firstName: "Jean-Baptiste",
+      lastName: "WITTNER",
+      email: "jeanbaptiste.wittner@outlook.com",
+      password: "GreatPassWord2023"
+    }
+    authapi.createUser(request).then(data => console.log(data))
+    .catch(error => console.error(error))
+  }
+
+  const login = () => {
+    const request: UserLoginRequest = {
+      email: "jeanbaptiste.wittner@outlook.com",
+      password: "GreatPassWord2023"
+    }
+    authapi.loginUser(request).then(data => console.log(data))
+    .catch(error => console.error(error))
+  }
+
+  const getUser = () => {
+    userapi.getUser()
+    .then(data => console.log(data))
+    .catch(error => console.error(error));
+  }
+
+
   return (
     <>
       <Head>
@@ -20,6 +59,9 @@ export default function Home() {
             Get started by editing&nbsp;
             <code className={styles.code}>src/pages/index.tsx</code>
           </p>
+          <button onClick={registration}>Registration</button>
+          <button onClick={login}>Login</button>
+          <button onClick={getUser}>Get User</button>
           <div>
             <a
               href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
