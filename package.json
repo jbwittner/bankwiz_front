@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format": "prettier --check --ignore-path .gitignore .",
+    "format:fix": "prettier --write --ignore-path .gitignore ."
   },
   "dependencies": {
     "@jbwittner/bankwiz_openapi-client": "^0.2.0",
@@ -23,6 +25,5 @@
     "eslint-config-prettier": "^8.8.0",
     "prettier": "^2.8.8",
     "typescript": "5.0.4"
-
   }
 }

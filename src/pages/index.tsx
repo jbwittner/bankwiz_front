@@ -1,16 +1,16 @@
-import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.css";
+import Head from 'next/head';
+import Image from 'next/image';
+import { Inter } from 'next/font/google';
+import styles from '@/styles/Home.module.css';
 import {
   AuthApi,
   Configuration,
   UserApi,
   UserLoginRequest,
   UserSignupRequest,
-} from "@jbwittner/bankwiz_openapi-client";
+} from '@jbwittner/bankwiz_openapi-client';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
   const confBack: Configuration = new Configuration({
@@ -19,15 +19,15 @@ export default function Home() {
     },
   });
 
-  var userapi = new UserApi(confBack);
-  var authapi = new AuthApi(confBack);
+  const userapi = new UserApi(confBack);
+  const authapi = new AuthApi(confBack);
 
   const registration = () => {
     const request: UserSignupRequest = {
-      firstName: "Jean-Baptiste",
-      lastName: "WITTNER",
-      email: "jeanbaptiste.wittner@outlook.com",
-      password: "GreatPassWord2023",
+      firstName: 'Jean-Baptiste',
+      lastName: 'WITTNER',
+      email: 'jeanbaptiste.wittner@outlook.com',
+      password: 'GreatPassWord2023',
     };
     authapi
       .createUser(request)
@@ -37,8 +37,8 @@ export default function Home() {
 
   const login = () => {
     const request: UserLoginRequest = {
-      email: "jeanbaptiste.wittner@outlook.com",
-      password: "GreatPassWord2023",
+      email: 'jeanbaptiste.wittner@outlook.com',
+      password: 'GreatPassWord2023',
     };
     authapi
       .loginUser(request)
@@ -76,7 +76,7 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              By{" "}
+              By{' '}
               <Image
                 src="/vercel.svg"
                 alt="Vercel Logo"
