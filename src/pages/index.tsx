@@ -7,6 +7,7 @@ import {
   UserLoginRequest,
   UserSignupRequest,
 } from '@jbwittner/bankwiz_openapi-client';
+import { Button } from '@mui/material';
 
 export default function Home() {
   const confBack: Configuration = new Configuration({
@@ -52,13 +53,13 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Create Next App</title>
+        <title>Bankwizz</title>
       </Head>
       <main>
         <div>
-          <button onClick={registration}>Registration</button>
-          <button onClick={login}>Login</button>
-          <button onClick={getUser}>Get User</button>
+          <Button onClick={registration}>Registration</Button>
+          <Button onClick={login}>Login</Button>
+          <Button onClick={getUser}>Get User</Button>
         </div>
       </main>
     </>
