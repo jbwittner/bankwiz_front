@@ -1,19 +1,23 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
-import { AuthApi, Configuration, UserApi, UserLoginRequest, UserSignupRequest } from '@jbwittner/bankwiz_openapi-client'
+import Head from "next/head";
+import Image from "next/image";
+import { Inter } from "next/font/google";
+import styles from "@/styles/Home.module.css";
+import {
+  AuthApi,
+  Configuration,
+  UserApi,
+  UserLoginRequest,
+  UserSignupRequest,
+} from "@jbwittner/bankwiz_openapi-client";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-
   const confBack: Configuration = new Configuration({
     baseOptions: {
       withCredentials: true,
     },
-  })
-
+  });
 
   var userapi = new UserApi(confBack);
   var authapi = new AuthApi(confBack);
@@ -23,27 +27,31 @@ export default function Home() {
       firstName: "Jean-Baptiste",
       lastName: "WITTNER",
       email: "jeanbaptiste.wittner@outlook.com",
-      password: "GreatPassWord2023"
-    }
-    authapi.createUser(request).then(data => console.log(data))
-    .catch(error => console.error(error))
-  }
+      password: "GreatPassWord2023",
+    };
+    authapi
+      .createUser(request)
+      .then((data) => console.log(data))
+      .catch((error) => console.error(error));
+  };
 
   const login = () => {
     const request: UserLoginRequest = {
       email: "jeanbaptiste.wittner@outlook.com",
-      password: "GreatPassWord2023"
-    }
-    authapi.loginUser(request).then(data => console.log(data))
-    .catch(error => console.error(error))
-  }
+      password: "GreatPassWord2023",
+    };
+    authapi
+      .loginUser(request)
+      .then((data) => console.log(data))
+      .catch((error) => console.error(error));
+  };
 
   const getUser = () => {
-    userapi.getUser()
-    .then(data => console.log(data))
-    .catch(error => console.error(error));
-  }
-
+    userapi
+      .getUser()
+      .then((data) => console.log(data))
+      .catch((error) => console.error(error));
+  };
 
   return (
     <>
@@ -68,7 +76,7 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              By{' '}
+              By{" "}
               <Image
                 src="/vercel.svg"
                 alt="Vercel Logo"
@@ -152,5 +160,5 @@ export default function Home() {
         </div>
       </main>
     </>
-  )
+  );
 }
