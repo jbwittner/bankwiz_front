@@ -1,0 +1,32 @@
+name: Branch CI
+on:
+  push:
+    branches:
+      - master
+      - develop
+env:
+  NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  CI: true
+  NEXT_TELEMETRY_DISABLED: 1
+jobs:
+  package_application:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout Git repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+          registry-url: 'https://npm.pkg.github.com'
+      - name: NPM Clean install
+        run: npm ci
+      - name: NPM Run lint
+        run: npm run lint
+      - name: NPM Run prettier
+        run: npm run prettier
+      - name: NPM Run build
+        run: npm run build
