@@ -4,8 +4,8 @@ import {
   UserSignupRequest,
 } from '@jbwittner/bankwiz_openapi-client';
 import { Button } from '@mui/material';
-import { useCreateUser, useLoginUser } from './hook/AuthHook';
-import { useGetUser } from './hook/UserHook';
+import { useCreateUser, useLoginUser } from '../hook/AuthHook';
+import { useGetUser } from '../hook/UserHook';
 
 export default function Home() {
   const userSignupRequest: UserSignupRequest = {
