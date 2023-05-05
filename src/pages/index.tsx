@@ -1,43 +1,28 @@
 import Head from 'next/head';
 import {
-  Configuration,
-  UserApi,
   UserLoginRequest,
   UserSignupRequest,
 } from '@jbwittner/bankwiz_openapi-client';
 import { Button } from '@mui/material';
 import { useCreateUser, useLoginUser } from './hook/AuthHook';
+import { useGetUser } from './hook/UserHook';
 
 export default function Home() {
-  const request22: UserSignupRequest = {
+  const userSignupRequest: UserSignupRequest = {
     firstName: 'Jean-Baptiste',
     lastName: 'WITTNER',
     email: 'jeanbaptiste.wittner@outlook.com',
     password: 'GreatPassWord2023',
   };
 
-  const request: UserLoginRequest = {
+  const userLoginRequest: UserLoginRequest = {
     email: 'jeanbaptiste.wittner@outlook.com',
     password: 'GreatPassWord2023',
   };
 
-  const { createUser } = useCreateUser();
-  const { loginUser } = useLoginUser();
-
-  const confBack: Configuration = new Configuration({
-    baseOptions: {
-      withCredentials: true,
-    },
-  });
-
-  const userapi = new UserApi(confBack);
-
-  const getUser = () => {
-    userapi
-      .getUser()
-      .then((data) => console.log(data))
-      .catch((error) => console.error(error));
-  };
+  const { sendRequest: createUser } = useCreateUser();
+  const { sendRequest: loginUser } = useLoginUser();
+  const { sendRequest: getUser } = useGetUser();
 
   return (
     <>
@@ -46,9 +31,11 @@ export default function Home() {
       </Head>
       <main>
         <div>
-          <Button onClick={() => createUser(request22)}>Registration</Button>
-          <Button onClick={() => loginUser(request)}>Login</Button>
-          <Button onClick={getUser}>Get User</Button>
+          <Button onClick={() => createUser(userSignupRequest)}>
+            Registration
+          </Button>
+          <Button onClick={() => loginUser(userLoginRequest)}>Login</Button>
+          <Button onClick={() => getUser()}>Get User</Button>
         </div>
       </main>
     </>
