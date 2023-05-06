@@ -7,7 +7,7 @@ interface LoginFormProps {
   onSubmit: (email: string, password: string) => void;
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
+const LoginForm = (props: LoginFormProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -21,7 +21,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onSubmit(email, password);
+    props.onSubmit(email, password);
   };
 
   return (
@@ -66,7 +66,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
   );
 };
 
-const LoginPage: React.FC = () => {
+const LoginPage = () => {
   const { sendRequest: loginUser } = useLoginUser();
 
   const handleLoginFormSubmit = (email: string, password: string) => {
