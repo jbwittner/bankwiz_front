@@ -4,6 +4,7 @@ import { TextField, Button, Box, Link, Typography } from '@mui/material';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useLoginUser } from '@/hook/AuthHook';
+import { toast } from 'react-toastify';
 
 interface LoginFormData {
   email: string;
@@ -20,11 +21,11 @@ const RegistrationPage = () => {
   const { sendRequest: loginUser } = useLoginUser();
 
   const onSubmit = async (data: LoginFormData) => {
-    loginUser({
+    await loginUser({
       email: data.email,
       password: data.password,
     });
-    push('/');
+    push('/index');
   };
 
   return (
@@ -87,7 +88,7 @@ const RegistrationPage = () => {
                   helperText={errors.password ? 'Password is required' : ''}
                 />
                 <Button type="submit" variant="contained">
-                  Registration
+                  Login
                 </Button>
               </Box>
             </form>

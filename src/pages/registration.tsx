@@ -4,6 +4,7 @@ import { TextField, Button, Box, Link, Typography } from '@mui/material';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useCreateUser } from '@/hook/AuthHook';
+import { toast } from 'react-toastify';
 
 interface RegistrationFormData {
   lastName: string;
@@ -22,13 +23,20 @@ const RegistrationPage = () => {
   const { sendRequest: createUser } = useCreateUser();
 
   const onSubmit = async (data: RegistrationFormData) => {
-    createUser({
-      lastName: data.lastName,
-      firstName: data.firstName,
-      email: data.email,
-      password: data.password,
-    });
-    push('/');
+    try {
+      createUser({
+        lastName: data.lastName,
+        firstName: data.firstName,
+        email: data.email,
+        password: data.password,
+      }).then(() => {
+        toast.success('Registration sucessfully !');
+      }).catch(() =>       console.log("bbbbbbbbbbbbbbbbbbbb")      )
+      console.log("ccccccccccccccccc");
+
+    } catch (error) {
+      console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+    }
   };
 
   return (
