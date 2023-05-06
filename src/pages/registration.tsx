@@ -1,17 +1,34 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box, Link, Typography } from '@mui/material';
-import { useLoginUser } from '@/hook/AuthHook';
+import { useCreateUser } from '@/hook/AuthHook';
 import Head from 'next/head';
 import MyTextField from '@/component/TextField';
 
-interface LoginFormProps {
+interface RegistrationFormProps {
   // eslint-disable-next-line no-unused-vars
-  onSubmit: (email: string, password: string) => void;
+  onSubmit: (
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string,
+  ) => void;
 }
 
-const LoginForm = (props: LoginFormProps) => {
+const RegistrationForm = (props: RegistrationFormProps) => {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const handleFirstNameChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setFirstName(event.target.value);
+  };
+
+  const handleLastNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setLastName(event.target.value);
+  };
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -23,7 +40,7 @@ const LoginForm = (props: LoginFormProps) => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    props.onSubmit(email, password);
+    props.onSubmit(firstName, lastName, email, password);
   };
 
   return (
@@ -45,6 +62,20 @@ const LoginForm = (props: LoginFormProps) => {
     >
       <MyTextField
         required
+        id="firstName"
+        label="First Name"
+        value={firstName}
+        onChange={handleFirstNameChange}
+      />
+      <MyTextField
+        required
+        id="lastName"
+        label="Last Name"
+        value={lastName}
+        onChange={handleLastNameChange}
+      />
+      <MyTextField
+        required
         id="email"
         label="Email"
         value={email}
@@ -59,17 +90,24 @@ const LoginForm = (props: LoginFormProps) => {
         onChange={handlePasswordChange}
       />
       <Button type="submit" variant="contained">
-        Login
+        Register
       </Button>
     </Box>
   );
 };
 
-const LoginPage = () => {
-  const { sendRequest: loginUser } = useLoginUser();
+const RegistrationPage = () => {
+  const { sendRequest: registerUser } = useCreateUser();
 
-  const handleLoginFormSubmit = (email: string, password: string) => {
-    loginUser({
+  const handleRegistrationFormSubmit = (
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string,
+  ) => {
+    registerUser({
+      firstName: firstName,
+      lastName: lastName,
       email: email,
       password: password,
     });
@@ -78,7 +116,7 @@ const LoginPage = () => {
   return (
     <>
       <Head>
-        <title>Bankwizz Login</title>
+        <title>Bankwizz Registration</title>
       </Head>
       <main>
         <Box
@@ -94,10 +132,10 @@ const LoginPage = () => {
             Bankwiz
           </Typography>
           <Box sx={{ width: '400px', height: 'auto', mt: 4 }}>
-            <LoginForm onSubmit={handleLoginFormSubmit} />
+            <RegistrationForm onSubmit={handleRegistrationFormSubmit} />
           </Box>
           <Box mt={2}>
-            <Link href="/registration">Register</Link>
+            <Link href="/">Already have an account? Login</Link>
           </Box>
         </Box>
       </main>
@@ -105,4 +143,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default RegistrationPage;

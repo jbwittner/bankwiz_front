@@ -5,6 +5,7 @@ const confBack: Configuration = new Configuration({
   baseOptions: {
     withCredentials: true,
   },
+  basePath: '/api',
 });
 
 function useApiRequestWithArguments<T, V>(
