@@ -2,34 +2,24 @@ import React, { useState } from 'react';
 import { TextField, Button, Box, Link, Typography } from '@mui/material';
 import { useCreateUser } from '@/hook/AuthHook';
 import Head from 'next/head';
-import SimpleTextField from '@/component/TextField';
+import { useRouter } from 'next/router';
 
+/* eslint-disable */
 interface RegistrationFormProps {
-  // eslint-disable-next-line no-unused-vars
   onSubmit: (
-    firstName: string,
     lastName: string,
+    firstName: string,
     email: string,
     password: string,
   ) => void;
 }
+/* eslint-enable */
 
-
-const RegistrationForm = (props: RegistrationFormProps) => {
+const LoginForm = (props: RegistrationFormProps) => {
+  const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const handleFirstNameChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setFirstName(event.target.value);
-  };
-
-  const handleLastNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setLastName(event.target.value);
-  };
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -39,9 +29,19 @@ const RegistrationForm = (props: RegistrationFormProps) => {
     setPassword(event.target.value);
   };
 
+  const handleLastNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setLastName(event.target.value);
+  };
+
+  const handleFirstNameChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setFirstName(event.target.value);
+  };
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    props.onSubmit(firstName, lastName, email, password);
+    props.onSubmit(lastName, firstName, email, password);
   };
 
   return (
@@ -61,28 +61,28 @@ const RegistrationForm = (props: RegistrationFormProps) => {
       noValidate
       autoComplete="off"
     >
-      <SimpleTextField
-        required
-        id="firstName"
-        label="First Name"
-        value={firstName}
-        onChange={handleFirstNameChange}
-      />
-      <SimpleTextField
+      <TextField
         required
         id="lastName"
         label="Last Name"
         value={lastName}
         onChange={handleLastNameChange}
       />
-      <SimpleTextField
+      <TextField
+        required
+        id="firstName"
+        label="First Name"
+        value={firstName}
+        onChange={handleFirstNameChange}
+      />
+      <TextField
         required
         id="email"
         label="Email"
         value={email}
         onChange={handleEmailChange}
       />
-      <SimpleTextField
+      <TextField
         required
         id="password"
         label="Password"
@@ -91,27 +91,29 @@ const RegistrationForm = (props: RegistrationFormProps) => {
         onChange={handlePasswordChange}
       />
       <Button type="submit" variant="contained">
-        Register
+        Registration
       </Button>
     </Box>
   );
 };
 
 const RegistrationPage = () => {
-  const { sendRequest: registerUser } = useCreateUser();
+  const { sendRequest: createUser } = useCreateUser();
+  const { push } = useRouter();
 
-  const handleRegistrationFormSubmit = (
-    firstName: string,
+  const handleLoginFormSubmit = async (
     lastName: string,
+    firstName: string,
     email: string,
     password: string,
   ) => {
-    registerUser({
-      firstName: firstName,
+    await createUser({
       lastName: lastName,
+      firstName: firstName,
       email: email,
       password: password,
     });
+    push('/');
   };
 
   return (
@@ -122,7 +124,7 @@ const RegistrationPage = () => {
       <main>
         <Box
           sx={{
-            height: '85vh',
+            height: '95vh',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -133,10 +135,10 @@ const RegistrationPage = () => {
             Bankwiz
           </Typography>
           <Box sx={{ width: '400px', height: 'auto', mt: 4 }}>
-            <RegistrationForm onSubmit={handleRegistrationFormSubmit} />
+            <LoginForm onSubmit={handleLoginFormSubmit} />
           </Box>
           <Box mt={2}>
-            <Link href="/">Already have an account? Login</Link>
+            <Link href="/">Already have an account ? Login</Link>
           </Box>
         </Box>
       </main>

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { TextField, Button, Box, Link, Typography } from '@mui/material';
 import { useLoginUser } from '@/hook/AuthHook';
 import Head from 'next/head';
-import SimpleTextField from '@/component/TextField';
 
 interface LoginFormProps {
   // eslint-disable-next-line no-unused-vars
@@ -43,14 +42,14 @@ const LoginForm = (props: LoginFormProps) => {
       noValidate
       autoComplete="off"
     >
-      <SimpleTextField
+      <TextField
         required
         id="email"
         label="Email"
         value={email}
         onChange={handleEmailChange}
       />
-      <SimpleTextField
+      <TextField
         required
         id="password"
         label="Password"
@@ -61,11 +60,14 @@ const LoginForm = (props: LoginFormProps) => {
       <Button type="submit" variant="contained">
         Login
       </Button>
+      <Box mt={2}>
+        <Link href="/registration">Register</Link>
+      </Box>
     </Box>
   );
 };
 
-const LoginPage = () => {
+const LoginPage: React.FC = () => {
   const { sendRequest: loginUser } = useLoginUser();
 
   const handleLoginFormSubmit = (email: string, password: string) => {
@@ -83,7 +85,7 @@ const LoginPage = () => {
       <main>
         <Box
           sx={{
-            height: '85vh',
+            height: '95vh',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -95,9 +97,6 @@ const LoginPage = () => {
           </Typography>
           <Box sx={{ width: '400px', height: 'auto', mt: 4 }}>
             <LoginForm onSubmit={handleLoginFormSubmit} />
-          </Box>
-          <Box mt={2}>
-            <Link href="/registration">Register</Link>
           </Box>
         </Box>
       </main>
