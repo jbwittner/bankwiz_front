@@ -30,8 +30,8 @@ const LoginForm = (props: LoginFormProps) => {
       component="form"
       onSubmit={handleSubmit}
       sx={{
-        '& .MuiTextField-root': { m: 1, width: '35ch', borderRadius: '10px' },
-        '& .MuiButton-root': { m: 1, width: '35ch', borderRadius: '10px' },
+        '& .MuiTextField-root': { m: 1, width: '45ch', borderRadius: '10px' },
+        '& .MuiButton-root': { m: 1, width: '45ch', borderRadius: '10px' },
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -60,9 +60,6 @@ const LoginForm = (props: LoginFormProps) => {
       <Button type="submit" variant="contained">
         Login
       </Button>
-      <Box mt={2}>
-        <Link href="/registration">Register</Link>
-      </Box>
     </Box>
   );
 };
@@ -97,6 +94,9 @@ const LoginPage: React.FC = () => {
           </Typography>
           <Box sx={{ width: '400px', height: 'auto', mt: 4 }}>
             <LoginForm onSubmit={handleLoginFormSubmit} />
+          </Box>
+          <Box mt={2}>
+            <Link href="/registration">Register</Link>
           </Box>
         </Box>
       </main>

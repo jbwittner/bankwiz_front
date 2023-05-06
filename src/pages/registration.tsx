@@ -56,12 +56,12 @@ const RegistrationPage = () => {
                 sx={{
                   '& .MuiTextField-root': {
                     m: 1,
-                    width: '35ch',
+                    width: '45ch',
                     borderRadius: '10px',
                   },
                   '& .MuiButton-root': {
                     m: 1,
-                    width: '35ch',
+                    width: '45ch',
                     borderRadius: '10px',
                   },
                   display: 'flex',
