@@ -1,18 +1,26 @@
-import { TextField, TextFieldProps } from '@mui/material';
-import React from 'react';
+import { TextField } from '@mui/material';
+import React, { ChangeEventHandler } from 'react';
 
-function MyTextField(props: TextFieldProps) {
-  
-  const { label, value, onChange, ...rest } = props;
+interface SimpleTextFieldProps {
+  label: string;
+  value: string;
+  onChange: ChangeEventHandler<HTMLInputElement>;
+  required?: boolean;
+  id?: string;
+  type?: string;
+}
 
+const SimpleTextField = (props: SimpleTextFieldProps) => {
   return (
     <TextField
-      label={label}
-      value={value}
-      onChange={onChange}
-      {...rest}
+      label={props.label}
+      value={props.value}
+      onChange={props.onChange}
+      required={props.required}
+      id={props.id}
+      type={props.type}
     />
   );
 }
 
-export default MyTextField;
+export default SimpleTextField;

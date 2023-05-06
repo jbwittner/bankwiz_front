@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { TextField, Button, Box, Link, Typography } from '@mui/material';
 import { useLoginUser } from '@/hook/AuthHook';
 import Head from 'next/head';
-import MyTextField from '@/component/TextField';
+import SimpleTextField from '@/component/TextField';
 
 interface LoginFormProps {
   // eslint-disable-next-line no-unused-vars
@@ -43,14 +43,14 @@ const LoginForm = (props: LoginFormProps) => {
       noValidate
       autoComplete="off"
     >
-      <MyTextField
+      <SimpleTextField
         required
         id="email"
         label="Email"
         value={email}
         onChange={handleEmailChange}
       />
-      <MyTextField
+      <SimpleTextField
         required
         id="password"
         label="Password"

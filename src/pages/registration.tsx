@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { TextField, Button, Box, Link, Typography } from '@mui/material';
 import { useCreateUser } from '@/hook/AuthHook';
 import Head from 'next/head';
-import MyTextField from '@/component/TextField';
+import SimpleTextField from '@/component/TextField';
 
 interface RegistrationFormProps {
   // eslint-disable-next-line no-unused-vars
@@ -60,28 +60,28 @@ const RegistrationForm = (props: RegistrationFormProps) => {
       noValidate
       autoComplete="off"
     >
-      <MyTextField
+      <SimpleTextField
         required
         id="firstName"
         label="First Name"
         value={firstName}
         onChange={handleFirstNameChange}
       />
-      <MyTextField
+      <SimpleTextField
         required
         id="lastName"
         label="Last Name"
         value={lastName}
         onChange={handleLastNameChange}
       />
-      <MyTextField
+      <SimpleTextField
         required
         id="email"
         label="Email"
         value={email}
         onChange={handleEmailChange}
       />
-      <MyTextField
+      <SimpleTextField
         required
         id="password"
         label="Password"
