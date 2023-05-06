@@ -22,7 +22,6 @@ const RegistrationPage = () => {
   const { sendRequest: createUser } = useCreateUser();
 
   const onSubmit = async (data: RegistrationFormData) => {
-    // Handle form submission here
     createUser({
       lastName: data.lastName,
       firstName: data.firstName,

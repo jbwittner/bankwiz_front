@@ -1,78 +1,30 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { TextField, Button, Box, Link, Typography } from '@mui/material';
-import { useLoginUser } from '@/hook/AuthHook';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
+import { useLoginUser } from '@/hook/AuthHook';
 
-interface LoginFormProps {
-  onSubmit: (email: string, password: string) => void;
+interface LoginFormData {
+  email: string;
+  password: string;
 }
 
-const LoginForm = (props: LoginFormProps) => {
+const RegistrationPage = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
-
-  const onSubmit = (data: { email: string; password: string }) => {
-    props.onSubmit(data.email, data.password);
-  };
-
-  return (
-    <Box
-      component="form"
-      onSubmit={handleSubmit(onSubmit)}
-      sx={{
-        '& .MuiTextField-root': { m: 1, width: '45ch', borderRadius: '10px' },
-        '& .MuiButton-root': { m: 1, width: '45ch', borderRadius: '10px' },
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        border: '1px solid #ccc',
-        borderRadius: '10px',
-        padding: '20px',
-      }}
-    >
-      <TextField
-        required
-        id="email"
-        label="Email"
-        {...register('email', {
-          required: true,
-          pattern: /^\S+@\S+$/i,
-        })}
-        error={!!errors.email}
-        helperText={errors.email ? 'Email is required and must be valid' : ''}
-      />
-      <TextField
-        required
-        id="password"
-        label="Password"
-        type="password"
-        {...register('password', { required: true, minLength: 8 })}
-        error={!!errors.password}
-        helperText={
-          errors.password
-            ? 'Password must be at least 8 characters long'
-            : ''
-        }
-      />
-      <Button type="submit" variant="contained">
-        Login
-      </Button>
-    </Box>
-  );
-};
-
-const LoginPage: React.FC = () => {
+  } = useForm<LoginFormData>();
+  const { push } = useRouter();
   const { sendRequest: loginUser } = useLoginUser();
 
-  const handleLoginFormSubmit = (email: string, password: string) => {
+  const onSubmit = async (data: LoginFormData) => {
     loginUser({
-      email: email,
-      password: password,
+      email: data.email,
+      password: data.password,
     });
+    push('/');
   };
 
   return (
@@ -94,10 +46,54 @@ const LoginPage: React.FC = () => {
             Bankwiz
           </Typography>
           <Box sx={{ width: '400px', height: 'auto', mt: 4 }}>
-            <LoginForm onSubmit={handleLoginFormSubmit} />
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Box
+                sx={{
+                  '& .MuiTextField-root': {
+                    m: 1,
+                    width: '45ch',
+                    borderRadius: '10px',
+                  },
+                  '& .MuiButton-root': {
+                    m: 1,
+                    width: '45ch',
+                    borderRadius: '10px',
+                  },
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  border: '1px solid #ccc',
+                  borderRadius: '10px',
+                  padding: '20px',
+                }}
+              >
+                <TextField
+                  required
+                  id="email"
+                  label="Email"
+                  {...register('email', {
+                    required: true,
+                  })}
+                  error={!!errors.email}
+                  helperText={errors.email ? 'Email is required' : ''}
+                />
+                <TextField
+                  required
+                  id="password"
+                  label="Password"
+                  type="password"
+                  {...register('password', { required: true })}
+                  error={!!errors.password}
+                  helperText={errors.password ? 'Password is required' : ''}
+                />
+                <Button type="submit" variant="contained">
+                  Registration
+                </Button>
+              </Box>
+            </form>
           </Box>
           <Box mt={2}>
-            <Link href="/registration">Register</Link>
+            <Link href="/registration">Registration</Link>
           </Box>
         </Box>
       </main>
@@ -105,4 +101,4 @@ const LoginPage: React.FC = () => {
   );
 };
 
-export default LoginPage;
+export default RegistrationPage;
