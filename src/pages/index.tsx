@@ -1,34 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 import { TextField, Button, Box, Link, Typography } from '@mui/material';
 import { useLoginUser } from '@/hook/AuthHook';
 import Head from 'next/head';
 
 interface LoginFormProps {
-  // eslint-disable-next-line no-unused-vars
   onSubmit: (email: string, password: string) => void;
 }
 
 const LoginForm = (props: LoginFormProps) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
-  };
-
-  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
-  };
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    props.onSubmit(email, password);
+  const onSubmit = (data: { email: string; password: string }) => {
+    props.onSubmit(data.email, data.password);
   };
 
   return (
     <Box
       component="form"
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmit(onSubmit)}
       sx={{
         '& .MuiTextField-root': { m: 1, width: '45ch', borderRadius: '10px' },
         '& .MuiButton-root': { m: 1, width: '45ch', borderRadius: '10px' },
@@ -39,23 +33,30 @@ const LoginForm = (props: LoginFormProps) => {
         borderRadius: '10px',
         padding: '20px',
       }}
-      noValidate
-      autoComplete="off"
     >
       <TextField
         required
         id="email"
         label="Email"
-        value={email}
-        onChange={handleEmailChange}
+        {...register('email', {
+          required: true,
+          pattern: /^\S+@\S+$/i,
+        })}
+        error={!!errors.email}
+        helperText={errors.email ? 'Email is required and must be valid' : ''}
       />
       <TextField
         required
         id="password"
         label="Password"
         type="password"
-        value={password}
-        onChange={handlePasswordChange}
+        {...register('password', { required: true, minLength: 8 })}
+        error={!!errors.password}
+        helperText={
+          errors.password
+            ? 'Password must be at least 8 characters long'
+            : ''
+        }
       />
       <Button type="submit" variant="contained">
         Login
