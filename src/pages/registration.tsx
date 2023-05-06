@@ -1,117 +1,33 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 import { TextField, Button, Box, Link, Typography } from '@mui/material';
-import { useCreateUser } from '@/hook/AuthHook';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { useCreateUser } from '@/hook/AuthHook';
 
-/* eslint-disable */
-interface RegistrationFormProps {
-  onSubmit: (
-    lastName: string,
-    firstName: string,
-    email: string,
-    password: string,
-  ) => void;
+interface RegistrationFormData {
+  lastName: string;
+  firstName: string;
+  email: string;
+  password: string;
 }
-/* eslint-enable */
-
-const LoginForm = (props: RegistrationFormProps) => {
-  const [email, setEmail] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
-  };
-
-  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
-  };
-
-  const handleLastNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setLastName(event.target.value);
-  };
-
-  const handleFirstNameChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setFirstName(event.target.value);
-  };
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    props.onSubmit(lastName, firstName, email, password);
-  };
-
-  return (
-    <Box
-      component="form"
-      onSubmit={handleSubmit}
-      sx={{
-        '& .MuiTextField-root': { m: 1, width: '35ch', borderRadius: '10px' },
-        '& .MuiButton-root': { m: 1, width: '35ch', borderRadius: '10px' },
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        border: '1px solid #ccc',
-        borderRadius: '10px',
-        padding: '20px',
-      }}
-      noValidate
-      autoComplete="off"
-    >
-      <TextField
-        required
-        id="lastName"
-        label="Last Name"
-        value={lastName}
-        onChange={handleLastNameChange}
-      />
-      <TextField
-        required
-        id="firstName"
-        label="First Name"
-        value={firstName}
-        onChange={handleFirstNameChange}
-      />
-      <TextField
-        required
-        id="email"
-        label="Email"
-        value={email}
-        onChange={handleEmailChange}
-      />
-      <TextField
-        required
-        id="password"
-        label="Password"
-        type="password"
-        value={password}
-        onChange={handlePasswordChange}
-      />
-      <Button type="submit" variant="contained">
-        Registration
-      </Button>
-    </Box>
-  );
-};
 
 const RegistrationPage = () => {
-  const { sendRequest: createUser } = useCreateUser();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegistrationFormData>();
   const { push } = useRouter();
+  const { sendRequest: createUser } = useCreateUser();
 
-  const handleLoginFormSubmit = async (
-    lastName: string,
-    firstName: string,
-    email: string,
-    password: string,
-  ) => {
-    await createUser({
-      lastName: lastName,
-      firstName: firstName,
-      email: email,
-      password: password,
+  const onSubmit = async (data: RegistrationFormData) => {
+    // Handle form submission here
+    createUser({
+      lastName: data.lastName,
+      firstName: data.firstName,
+      email: data.email,
+      password: data.password,
     });
     push('/');
   };
@@ -135,7 +51,74 @@ const RegistrationPage = () => {
             Bankwiz
           </Typography>
           <Box sx={{ width: '400px', height: 'auto', mt: 4 }}>
-            <LoginForm onSubmit={handleLoginFormSubmit} />
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Box
+                sx={{
+                  '& .MuiTextField-root': {
+                    m: 1,
+                    width: '35ch',
+                    borderRadius: '10px',
+                  },
+                  '& .MuiButton-root': {
+                    m: 1,
+                    width: '35ch',
+                    borderRadius: '10px',
+                  },
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  border: '1px solid #ccc',
+                  borderRadius: '10px',
+                  padding: '20px',
+                }}
+              >
+                <TextField
+                  required
+                  id="lastName"
+                  label="Last Name"
+                  {...register('lastName', { required: true })}
+                  error={!!errors.lastName}
+                  helperText={errors.lastName ? 'Last Name is required' : ''}
+                />
+                <TextField
+                  required
+                  id="firstName"
+                  label="First Name"
+                  {...register('firstName', { required: true })}
+                  error={!!errors.firstName}
+                  helperText={errors.firstName ? 'First Name is required' : ''}
+                />
+                <TextField
+                  required
+                  id="email"
+                  label="Email"
+                  {...register('email', {
+                    required: true,
+                    pattern: /^\S+@\S+$/i,
+                  })}
+                  error={!!errors.email}
+                  helperText={
+                    errors.email ? 'Email is required and must be valid' : ''
+                  }
+                />
+                <TextField
+                  required
+                  id="password"
+                  label="Password"
+                  type="password"
+                  {...register('password', { required: true, minLength: 8 })}
+                  error={!!errors.password}
+                  helperText={
+                    errors.password
+                      ? 'Password must be at least 8 characters long'
+                      : ''
+                  }
+                />
+                <Button type="submit" variant="contained">
+                  Registration
+                </Button>
+              </Box>
+            </form>
           </Box>
           <Box mt={2}>
             <Link href="/">Already have an account ? Login</Link>
