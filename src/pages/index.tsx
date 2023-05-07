@@ -31,34 +31,37 @@ const RegistrationPage = () => {
 
   return (
     <>
-    <PageForm>
-    <TextField
-                  required
-                  id="email"
-                  label="Email"
-                  {...register('email', {
-                    required: true,
-                    pattern: /^\S+@\S+$/i,
-                  })}
-                  error={!!errors.email}
-                  helperText={
-                    errors.email ? 'Email is required and must be valid' : ''
-                  }
-                />
-                <TextField
-                  required
-                  id="password"
-                  label="Password"
-                  type="password"
-                  {...register('password', { required: true })}
-                  error={!!errors.password}
-                  helperText={errors.password ? 'Password is required' : ''}
-                />
-                <Button type="submit" variant="contained">
-                  Login
-                </Button>
-
-    </PageForm>
+      <PageForm
+        titlePage={'Bankwiz Login'}
+        titleForm={'Bankwiz'}
+        linkHref={'/registration'}
+        linkContent={'Registration'}
+        handleSubmit={handleSubmit(onSubmit)}
+      >
+        <TextField
+          required
+          id="email"
+          label="Email"
+          {...register('email', {
+            required: true,
+            pattern: /^\S+@\S+$/i,
+          })}
+          error={!!errors.email}
+          helperText={errors.email ? 'Email is required and must be valid' : ''}
+        />
+        <TextField
+          required
+          id="password"
+          label="Password"
+          type="password"
+          {...register('password', { required: true })}
+          error={!!errors.password}
+          helperText={errors.password ? 'Password is required' : ''}
+        />
+        <Button type="submit" variant="contained">
+          Login
+        </Button>
+      </PageForm>
     </>
   );
 };
