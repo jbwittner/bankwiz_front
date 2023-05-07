@@ -1,6 +1,7 @@
 import { UserApi, UserDTO } from '@jbwittner/bankwiz_openapi-client';
 import {
   ApiError,
+  ApiRequestOptions,
   ErrorCode,
   confBack,
   useApiRequestWithoutArgument,
@@ -19,11 +20,12 @@ function interpretGetUserApiError(error: ApiError) {
   }
 }
 
-const useGetUser = () => {
+const useGetUser = (options: ApiRequestOptions<UserDTO> = {}) => {
   const createUserRequest = () => userApi.getUser();
   return useApiRequestWithoutArgument<UserDTO>(
     createUserRequest,
     interpretGetUserApiError,
+    options
   );
 };
 

@@ -6,6 +6,7 @@ import {
 } from '@jbwittner/bankwiz_openapi-client';
 import {
   ApiError,
+  ApiRequestOptions,
   ErrorCode,
   confBack,
   useApiRequestWithArguments,
@@ -38,21 +39,23 @@ function interpretCreateApiError(error: ApiError) {
   }
 }
 
-const useCreateUser = () => {
+const useCreateUser = (options: ApiRequestOptions<UserDTO> = {}) => {
   const createUserRequest = (userSignupRequest: UserSignupRequest) =>
     authapi.createUser(userSignupRequest);
   return useApiRequestWithArguments<UserSignupRequest, UserDTO>(
     createUserRequest,
     interpretLoginApiError,
+    options
   );
 };
 
-const useLoginUser = () => {
+const useLoginUser = (options: ApiRequestOptions<UserDTO> = {}) => {
   const loginUserRequest = (userLoginRequest: UserLoginRequest) =>
     authapi.loginUser(userLoginRequest);
   return useApiRequestWithArguments<UserLoginRequest, UserDTO>(
     loginUserRequest,
     interpretCreateApiError,
+    options
   );
 };
 
