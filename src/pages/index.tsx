@@ -1,43 +1,68 @@
-import Head from 'next/head';
-import {
-  UserLoginRequest,
-  UserSignupRequest,
-} from '@jbwittner/bankwiz_openapi-client';
-import { Button } from '@mui/material';
-import { useCreateUser, useLoginUser } from '../hook/AuthHook';
-import { useGetUser } from '../hook/UserHook';
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { TextField, Button } from '@mui/material';
+import { useRouter } from 'next/router';
+import { useLoginUser } from '@/hook/AuthHook';
+import { PageForm } from '@/components/PageForm';
 
-export default function Home() {
-  const userSignupRequest: UserSignupRequest = {
-    firstName: 'Jean-Baptiste',
-    lastName: 'WITTNER',
-    email: 'jeanbaptiste.wittner@outlook.com',
-    password: 'GreatPassWord2023',
+interface LoginFormData {
+  email: string;
+  password: string;
+}
+
+const RegistrationPage = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormData>();
+  const { push } = useRouter();
+  const { sendRequest: loginUser } = useLoginUser({
+    onSuccess: () => push('/home'),
+  });
+
+  const onSubmit = (data: LoginFormData) => {
+    loginUser({
+      email: data.email,
+      password: data.password,
+    });
   };
-
-  const userLoginRequest: UserLoginRequest = {
-    email: 'jeanbaptiste.wittner@outlook.com',
-    password: 'GreatPassWord2023',
-  };
-
-  const { sendRequest: createUser } = useCreateUser();
-  const { sendRequest: loginUser } = useLoginUser();
-  const { sendRequest: getUser } = useGetUser();
 
   return (
     <>
-      <Head>
-        <title>Bankwizz</title>
-      </Head>
-      <main>
-        <div>
-          <Button onClick={() => createUser(userSignupRequest)}>
-            Registration
-          </Button>
-          <Button onClick={() => loginUser(userLoginRequest)}>Login</Button>
-          <Button onClick={() => getUser()}>Get User</Button>
-        </div>
-      </main>
+      <PageForm
+        titlePage={'Bankwiz Login'}
+        titleForm={'Bankwiz'}
+        linkHref={'/registration'}
+        linkContent={'Registration'}
+        handleSubmit={handleSubmit(onSubmit)}
+      >
+        <TextField
+          required
+          id="email"
+          label="Email"
+          {...register('email', {
+            required: true,
+            pattern: /^\S+@\S+$/i,
+          })}
+          error={!!errors.email}
+          helperText={errors.email ? 'Email is required and must be valid' : ''}
+        />
+        <TextField
+          required
+          id="password"
+          label="Password"
+          type="password"
+          {...register('password', { required: true })}
+          error={!!errors.password}
+          helperText={errors.password ? 'Password is required' : ''}
+        />
+        <Button type="submit" variant="contained">
+          Login
+        </Button>
+      </PageForm>
     </>
   );
-}
+};
+
+export default RegistrationPage;
