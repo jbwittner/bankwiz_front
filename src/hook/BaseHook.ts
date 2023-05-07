@@ -61,7 +61,6 @@ function useApiRequestWithArguments<T, V>(
       setData(response.data);
       options.onSuccess && options.onSuccess(response.data);
     } catch (err: any) {
-      console.log(err);
       if (isApiError(err)) {
         errorInterpreter(err);
       }
@@ -91,7 +90,6 @@ function useApiRequestWithoutArgument<T>(
       setData(response.data);
       options.onSuccess && options.onSuccess(response.data);
     } catch (err: any) {
-      console.log(err);
       if (isApiError(err)) {
         errorInterpreter(err);
       }
