@@ -1,7 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { TextField, Button, Box, Link, Typography } from '@mui/material';
-import Head from 'next/head';
+import { TextField, Button } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useLoginUser } from '@/hook/AuthHook';
 import { PageForm } from '@/components/PageForm';
