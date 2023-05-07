@@ -4,6 +4,7 @@ import { TextField, Button, Box, Link, Typography } from '@mui/material';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useCreateUser } from '@/hook/AuthHook';
+import { toast } from 'react-toastify';
 
 interface RegistrationFormData {
   lastName: string;
@@ -20,11 +21,16 @@ const RegistrationPage = () => {
   } = useForm<RegistrationFormData>();
   const { push } = useRouter();
   const { sendRequest: createUser } = useCreateUser({
-    onSuccess: () => push('/'),
+    onSuccess: () => {
+      toast.success('Registration successfully !');
+      push('/');
+    },
   });
 
   const onSubmit = async (data: RegistrationFormData) => {
-    const fistNameCapitalized = data.firstName.charAt(0).toUpperCase() + data.firstName.toLowerCase().slice(1)
+    const fistNameCapitalized =
+      data.firstName.charAt(0).toUpperCase() +
+      data.firstName.toLowerCase().slice(1);
     createUser({
       lastName: data.lastName.toUpperCase(),
       firstName: fistNameCapitalized,

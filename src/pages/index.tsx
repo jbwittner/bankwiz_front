@@ -74,9 +74,12 @@ const RegistrationPage = () => {
                   label="Email"
                   {...register('email', {
                     required: true,
+                    pattern: /^\S+@\S+$/i,
                   })}
                   error={!!errors.email}
-                  helperText={errors.email ? 'Email is required' : ''}
+                  helperText={
+                    errors.email ? 'Email is required and must be valid' : ''
+                  }
                 />
                 <TextField
                   required
