@@ -25,7 +25,7 @@ const useGetUser = (options: ApiRequestOptions<UserDTO> = {}) => {
   return useApiRequestWithoutArgument<UserDTO>(
     createUserRequest,
     interpretGetUserApiError,
-    options
+    options,
   );
 };
 

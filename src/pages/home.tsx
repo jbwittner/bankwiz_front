@@ -1,18 +1,19 @@
-import React, { useState } from 'react';
-import { TextField, Typography } from '@mui/material';
+import React, { useEffect } from 'react';
+import { Typography } from '@mui/material';
+import { useGetUser } from '@/hook/UserHook';
 
 function App() {
-  const [nom, setNom] = useState('');
+  const { sendRequest: getUser, data, isLoading } = useGetUser();
 
-  const handleNomChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNom(event.target.value);
-  };
+  useEffect(() => {
+    getUser();
+  }, []);
 
   return (
     <div style={{ padding: '16px' }}>
-      <TextField label="Nom" value={nom} onChange={handleNomChange} />
+      <div>is Loading : {isLoading.toString()}</div>
       <Typography variant="h5" component="h1" style={{ marginTop: '16px' }}>
-        Bonjour {nom} !
+        Hi {data?.firstName} !
       </Typography>
     </div>
   );

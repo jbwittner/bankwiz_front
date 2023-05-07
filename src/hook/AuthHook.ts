@@ -45,7 +45,7 @@ const useCreateUser = (options: ApiRequestOptions<UserDTO> = {}) => {
   return useApiRequestWithArguments<UserSignupRequest, UserDTO>(
     createUserRequest,
     interpretLoginApiError,
-    options
+    options,
   );
 };
 
@@ -55,7 +55,7 @@ const useLoginUser = (options: ApiRequestOptions<UserDTO> = {}) => {
   return useApiRequestWithArguments<UserLoginRequest, UserDTO>(
     loginUserRequest,
     interpretCreateApiError,
-    options
+    options,
   );
 };
 

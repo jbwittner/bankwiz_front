@@ -4,7 +4,6 @@ import { TextField, Button, Box, Link, Typography } from '@mui/material';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useLoginUser } from '@/hook/AuthHook';
-import { toast } from 'react-toastify';
 
 interface LoginFormData {
   email: string;
@@ -18,14 +17,15 @@ const RegistrationPage = () => {
     formState: { errors },
   } = useForm<LoginFormData>();
   const { push } = useRouter();
-  const { sendRequest: loginUser } = useLoginUser();
+  const { sendRequest: loginUser } = useLoginUser({
+    onSuccess: () => push('/home'),
+  });
 
-  const onSubmit = async (data: LoginFormData) => {
-    await loginUser({
+  const onSubmit = (data: LoginFormData) => {
+    loginUser({
       email: data.email,
       password: data.password,
     });
-    push('/index');
   };
 
   return (

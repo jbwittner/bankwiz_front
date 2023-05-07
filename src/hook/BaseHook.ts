@@ -48,7 +48,7 @@ const confBack: Configuration = new Configuration({
 function useApiRequestWithArguments<T, V>(
   apiMethod: (requestParameter: T) => Promise<{ data: V }>,
   errorInterpreter: (error: ApiError) => void,
-  options: ApiRequestOptions<V> = {}
+  options: ApiRequestOptions<V> = {},
 ) {
   const [data, setData] = useState<V | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -75,11 +75,10 @@ function useApiRequestWithArguments<T, V>(
   return { sendRequest, data, isLoading, error };
 }
 
-
 function useApiRequestWithoutArgument<T>(
   apiMethod: () => Promise<{ data: T }>,
   errorInterpreter: (error: ApiError) => void,
-  options: ApiRequestOptions<T> = {}
+  options: ApiRequestOptions<T> = {},
 ) {
   const [data, setData] = useState<T | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
