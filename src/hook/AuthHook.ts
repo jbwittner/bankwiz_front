@@ -44,7 +44,7 @@ const useCreateUser = (options: ApiRequestOptions<UserDTO> = {}) => {
     authapi.createUser(userSignupRequest);
   return useApiRequestWithArguments<UserSignupRequest, UserDTO>(
     createUserRequest,
-    interpretLoginApiError,
+    interpretCreateApiError,
     options,
   );
 };
@@ -54,7 +54,7 @@ const useLoginUser = (options: ApiRequestOptions<UserDTO> = {}) => {
     authapi.loginUser(userLoginRequest);
   return useApiRequestWithArguments<UserLoginRequest, UserDTO>(
     loginUserRequest,
-    interpretCreateApiError,
+    interpretLoginApiError,
     options,
   );
 };

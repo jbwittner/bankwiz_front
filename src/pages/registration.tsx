@@ -24,9 +24,10 @@ const RegistrationPage = () => {
   });
 
   const onSubmit = async (data: RegistrationFormData) => {
+    const fistNameCapitalized = data.firstName.charAt(0).toUpperCase() + data.firstName.toLowerCase().slice(1)
     createUser({
-      lastName: data.lastName,
-      firstName: data.firstName,
+      lastName: data.lastName.toUpperCase(),
+      firstName: fistNameCapitalized,
       email: data.email,
       password: data.password,
     });
