@@ -21,9 +21,9 @@ const RegistrationPage = () => {
   } = useForm<RegistrationFormData>();
   const { push } = useRouter();
   const { sendRequest: createUser } = useCreateUser({
-    onSuccess: async () => {
+    onSuccess: () => {
       toast.success('Registration successfully !');
-      await push('/');
+      push('/');
     },
   });
 
