@@ -71,3 +71,28 @@ jobs:
         run: pnpm install
       - name: PNPM Run build
         run: pnpm run build
+  test:
+    runs-on: ubuntu-22.04
+    needs:
+      - build
+    steps:
+      - name: Checkout Git repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
+          registry-url: 'https://npm.pkg.github.com'
+      - name: PNPM Clean install
+        run: pnpm install
+      - name: PNPM Run build
+        run: pnpm run build
+      - name: PNPM Run test
+        run: pnpm run coverage
+
