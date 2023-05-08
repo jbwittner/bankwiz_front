@@ -95,4 +95,3 @@ jobs:
         run: pnpm run build
       - name: PNPM Run test
         run: pnpm run coverage
-
