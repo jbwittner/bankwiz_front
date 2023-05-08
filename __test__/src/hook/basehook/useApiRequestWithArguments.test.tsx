@@ -17,7 +17,7 @@ describe('useApiRequestWithArguments', () => {
       useApiRequestWithArguments(mockApiMethod, vi.fn(), {}),
     );
 
-    result.current.sendRequest(mockRequestObject);
+    await result.current.sendRequest(mockRequestObject);
     expect(mockApiMethod).toHaveBeenCalledWith(mockRequestObject);
   });
 
