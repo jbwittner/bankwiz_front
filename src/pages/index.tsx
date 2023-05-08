@@ -18,8 +18,8 @@ const RegistrationPage = () => {
   } = useForm<LoginFormData>();
   const { push } = useRouter();
   const { sendRequest: loginUser } = useLoginUser({
-    onSuccess: () => {
-      push('/home');
+    onSuccess: async () => {
+      await push('/home');
     },
   });
 
