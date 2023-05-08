@@ -10,14 +10,10 @@ export default defineConfig({
     coverage: {
       all: true,
       include: ['src/**/*'],
-      reporter: [
-        ['lcov', { 'projectRoot': './src' }],
-      ]
+      reporter: [['lcov', { projectRoot: './src' }]],
     },
-    
   },
   resolve: {
     alias: [{ find: '@', replacement: resolve(__dirname, './src') }],
-  }
-  
+  },
 });
