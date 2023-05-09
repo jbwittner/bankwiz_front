@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { TextField, Button } from '@mui/material';
 import { useRouter } from 'next/router';
-import { useCreateUser } from '@/hook/AuthHook';
+import { useCreateUser } from '@/hook/api/AuthHook';
 import { PageForm } from '@/components/PageForm';
 import { toast } from 'react-toastify';
 

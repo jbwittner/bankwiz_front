@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { Typography } from '@mui/material';
-import { useGetUser } from '@/hook/UserHook';
+import { useGetUser } from '@/hook/api/UserHook';
 
 function App() {
-  const { sendRequest: getUser, data, isLoading } = useGetUser();
+  const { sendRequest: getUser, data } = useGetUser();
 
   useEffect(() => {
     getUser();
@@ -11,7 +11,6 @@ function App() {
 
   return (
     <div style={{ padding: '16px' }}>
-      <div>is Loading : {isLoading.toString()}</div>
       <Typography variant="h5" component="h1" style={{ marginTop: '16px' }}>
         Hi {data?.firstName} !
       </Typography>
