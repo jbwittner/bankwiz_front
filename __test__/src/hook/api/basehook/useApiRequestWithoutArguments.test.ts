@@ -1,4 +1,4 @@
-import { ApiError, useApiRequestWithoutArgument } from '@/hook/BaseHook';
+import { ApiError, useApiRequestWithoutArgument } from '@/hook/api/BaseHook';
 import { renderHook } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -9,7 +9,6 @@ describe('useApiRequestWithoutArguments', () => {
   const mockErrorCallback = vi.fn();
 
   beforeEach(() => {
-    vi.clearAllMocks();
     vi.resetAllMocks();
   });
 

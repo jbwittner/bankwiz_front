@@ -1,4 +1,4 @@
-import { ApiError, useApiRequestWithArguments } from '@/hook/BaseHook';
+import { ApiError, useApiRequestWithArguments } from '@/hook/api/BaseHook';
 import { renderHook } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
