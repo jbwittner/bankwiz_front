@@ -51,11 +51,9 @@ function useApiRequestWithArguments<T, V>(
   options: ApiRequestOptions<V> = {},
 ) {
   const [data, setData] = useState<V | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<any>(null);
 
   const sendRequest = async (requestObject: T) => {
-    setIsLoading(true);
     try {
       const response = await apiMethod(requestObject);
       setData(response.data);
@@ -67,11 +65,9 @@ function useApiRequestWithArguments<T, V>(
       options.onError && options.onError(err);
       setError(err);
     }
-
-    setIsLoading(false);
   };
 
-  return { sendRequest, data, isLoading, error };
+  return { sendRequest, data, error };
 }
 
 function useApiRequestWithoutArgument<T>(
@@ -80,11 +76,9 @@ function useApiRequestWithoutArgument<T>(
   options: ApiRequestOptions<T> = {},
 ) {
   const [data, setData] = useState<T | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<any>(null);
 
   const sendRequest = async () => {
-    setIsLoading(true);
     try {
       const response = await apiMethod();
       setData(response.data);
@@ -96,11 +90,9 @@ function useApiRequestWithoutArgument<T>(
       options.onError && options.onError(err);
       setError(err);
     }
-
-    setIsLoading(false);
   };
 
-  return { sendRequest, data, isLoading, error };
+  return { sendRequest, data, error };
 }
 
 export {

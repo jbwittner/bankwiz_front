@@ -1,10 +1,9 @@
-import { ApiError, useApiRequestWithArguments } from '@/hook/BaseHook';
+import { ApiError, useApiRequestWithoutArgument } from '@/hook/BaseHook';
 import { renderHook } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-describe('useApiRequestWithArguments', () => {
+describe('useApiRequestWithoutArguments', () => {
   const mockApiMethod = vi.fn();
-  const mockRequestObject = { id: 123 };
   const mockSuccessCallback = vi.fn();
   const mockErrorInterpreter = vi.fn();
   const mockErrorCallback = vi.fn();
@@ -18,13 +17,13 @@ describe('useApiRequestWithArguments', () => {
     mockApiMethod.mockResolvedValueOnce({ data: true });
 
     const { result, rerender } = renderHook(() =>
-      useApiRequestWithArguments(mockApiMethod, vi.fn(), {}),
+      useApiRequestWithoutArgument(mockApiMethod, vi.fn(), {}),
     );
 
-    await result.current.sendRequest(mockRequestObject);
+    await result.current.sendRequest();
     rerender();
 
-    expect(mockApiMethod).toHaveBeenCalledWith(mockRequestObject);
+    expect(mockApiMethod).toHaveBeenCalled();
   });
 
   it('should set the data and call the success callback if the request is successful', async () => {
@@ -32,7 +31,7 @@ describe('useApiRequestWithArguments', () => {
     mockApiMethod.mockResolvedValueOnce(mockResponse);
 
     const { result, rerender } = renderHook(() =>
-      useApiRequestWithArguments<any, boolean>(
+      useApiRequestWithoutArgument<boolean>(
         mockApiMethod,
         mockErrorInterpreter,
         {
@@ -42,7 +41,7 @@ describe('useApiRequestWithArguments', () => {
       ),
     );
 
-    await result.current.sendRequest(mockRequestObject);
+    await result.current.sendRequest();
     rerender();
 
     expect(result.current.data).toEqual(mockResponse.data);
@@ -60,13 +59,13 @@ describe('useApiRequestWithArguments', () => {
     });
 
     const { result, rerender } = renderHook(() =>
-      useApiRequestWithArguments(mockApiMethod, mockErrorInterpreter, {
+      useApiRequestWithoutArgument(mockApiMethod, mockErrorInterpreter, {
         onSuccess: mockSuccessCallback,
         onError: mockErrorCallback,
       }),
     );
 
-    await result.current.sendRequest(mockRequestObject);
+    await result.current.sendRequest();
     rerender();
 
     expect(result.current.error).toEqual(mockErrorResponse);
@@ -85,13 +84,13 @@ describe('useApiRequestWithArguments', () => {
     mockApiMethod.mockRejectedValueOnce(mockErrorResponse);
 
     const { result, rerender } = renderHook(() =>
-      useApiRequestWithArguments(mockApiMethod, mockErrorInterpreter, {
+      useApiRequestWithoutArgument(mockApiMethod, mockErrorInterpreter, {
         onSuccess: mockSuccessCallback,
         onError: mockErrorCallback,
       }),
     );
 
-    await result.current.sendRequest(mockRequestObject);
+    await result.current.sendRequest();
     rerender();
 
     expect(result.current.error).toEqual(mockErrorResponse);
