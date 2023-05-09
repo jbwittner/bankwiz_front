@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('PageForm', () => {
-  const titlePage = 'My Page';
+  const titlePage = 'My title Page';
   const titleForm = 'My Form';
   const linkHref = '/my-page';
   const linkContent = 'Go to my page';
